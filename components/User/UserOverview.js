@@ -1,25 +1,31 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useContext} from 'react'
 import { FlatGrid } from 'react-native-super-grid';
 import User from './User';
 import { StyleSheet } from 'react-native';
-import { useContext,useState } from 'react';
-import { useNavigation } from '@react-navigation/core'
+import {useState } from 'react';
+import axios from 'axios';
+import { FAB } from 'react-native-elements';
+import { View } from 'react-native';
 import StoreContext from '../../store';
+
 const UserOverview = () => {
-
-  const context = useContext(StoreContext)
-  const {users}= context;
-
-  const [userList, setuserList] = useState(users)
-
-    const navigation = useNavigation();
   
+  const context = useContext(StoreContext)
+  const [users, setUsers] = useState([]);
 
-    const navigateToDetails = () => {
-        navigation.navigate("Details")
-    }
+ const api= "https://dummyjson.com/users"
+
+ useEffect(() => {
+  
+    axios.get(api).then((resp)=>{
+          setUsers(resp.data.users);
+        })
+    }, []);
+
+
 
     return (
+    <View style={styles.container} >
     <FlatGrid
       itemDimension={150}
       data={users}
@@ -30,10 +36,12 @@ const UserOverview = () => {
          name={`${item.firstName} ${item.lastName}`} 
          age={item.age} 
          url={item.image}
-         onPress={()=>navigateToDetails()}
+         user={item}
          />
       )}
     />
+     <FAB title="+" size="large" color="tomato" style={styles.fab} />
+    </View>
     )
 }
 
@@ -44,5 +52,13 @@ const styles = StyleSheet.create({
     gridView: {
         marginTop: 10,
         flex: 1,
+        paddingLeft:8
       },
+      container:{
+        flex:1,
+        paddingVertical:10
+      },
+      fab:{
+        paddingVertical:10
+      }
 })
