@@ -17,6 +17,9 @@ export const users = createSlice({
         },
         usersRequestFailed:(users,action)=>{
             users.loading=false
+        },
+        userAdded:(users,action)=>{
+            users.list.push(action.payload)
         }
     }
 })
@@ -28,6 +31,6 @@ export const loadUsers=()=>(dispatch, getState)=>{
         onError: usersRequestFailed.type
     }))
 }
-export const {usersReceived,usersRequested,usersRequestFailed} = users.actions
+export const {usersReceived,usersRequested,usersRequestFailed, userAdded} = users.actions
 export default users.reducer;
 //usersReceived({payload is here})

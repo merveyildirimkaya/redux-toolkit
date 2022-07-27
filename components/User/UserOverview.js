@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { FlatGrid } from 'react-native-super-grid';
 import User from './User';
 import { StyleSheet } from 'react-native';
@@ -6,13 +6,15 @@ import { FAB } from 'react-native-elements';
 import { View } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import { loadUsers } from '../../store/users';
-
+import AddUser from './AddUser';
 const UserOverview = () => {
+
+const [modalVisible, setModalVisible] = useState(false)
 
 const dispatch = useDispatch()
 const users= useSelector(state=>state.list)
-
-  useEffect(() => {
+  
+useEffect(() => {
     dispatch(loadUsers())
   }, [])
 
@@ -32,7 +34,12 @@ const users= useSelector(state=>state.list)
          />
       )}
     />
-     <FAB title="+" size="large" color="tomato" style={styles.fab} />
+    <AddUser
+            modalVisible={modalVisible} 
+            setModalVisible={setModalVisible}
+            users={users}
+            />
+     <FAB title="+" size="large" color="tomato" style={styles.fab}  onPress={()=>setModalVisible(true)} />
     </View>
     )
 }
