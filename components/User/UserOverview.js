@@ -1,28 +1,20 @@
-import React,{useEffect,useContext} from 'react'
+import React,{useEffect} from 'react'
 import { FlatGrid } from 'react-native-super-grid';
 import User from './User';
 import { StyleSheet } from 'react-native';
-import {useState } from 'react';
-import axios from 'axios';
 import { FAB } from 'react-native-elements';
 import { View } from 'react-native';
-import StoreContext from '../../store';
+import { useDispatch,useSelector } from 'react-redux';
+import { loadUsers } from '../../store/users';
 
 const UserOverview = () => {
-  
-  const context = useContext(StoreContext)
-  const [users, setUsers] = useState([]);
 
- const api= "https://dummyjson.com/users"
+const dispatch = useDispatch()
+const users= useSelector(state=>state.list)
 
- useEffect(() => {
-  
-    axios.get(api).then((resp)=>{
-          setUsers(resp.data.users);
-        })
-    }, []);
-
-
+  useEffect(() => {
+    dispatch(loadUsers())
+  }, [])
 
     return (
     <View style={styles.container} >

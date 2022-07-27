@@ -1,25 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet,LogBox} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserOverview from './components/User/UserOverview';
 import UserDetail from './components/User/UserDetail';
-import StoreContext from './store';
-import axios from 'axios';
-import { useState,useEffect } from 'react';
+import configureStore from './store/configureStore';
+import { Provider } from 'react-redux'
+
+
 const Stack = createNativeStackNavigator();
+
+const store = configureStore();
 
 export default function App() {
 
   LogBox.ignoreLogs(['Remote debugger']);
 
-  const api= "https://dummyjson.com/users"
-
-
     
   return (
   
-    <StoreContext.Provider>
+    <Provider store={store}>
     <NavigationContainer>   
         <Stack.Navigator>
           <Stack.Screen
@@ -33,7 +33,7 @@ export default function App() {
         />
        </Stack.Navigator>
     </NavigationContainer>
-    </StoreContext.Provider>
+    </Provider>
 
   );
 }
