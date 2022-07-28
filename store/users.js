@@ -5,7 +5,7 @@ export const users = createSlice({
     name:"users",
     initialState:{
         loading:false,
-        list:[]
+        list:[],
     },
     reducers:{
         usersRequested:(users,action)=>{
@@ -26,6 +26,7 @@ export const users = createSlice({
 
 export const loadUsers=()=>(dispatch, getState)=>{
     return dispatch(apiCallBegan({
+        url:"/users",
         onStart: usersRequested.type,
         onSuccess: usersReceived.type,
         onError: usersRequestFailed.type
