@@ -11,10 +11,11 @@ const api = ({dispatch}) => next =>async action =>{
 
     if(onStart){dispatch({type:onStart}); next(action)}
     try {
-      axios.request({
+      const resp = await axios.request({
             baseURL,
             url,
-        }).then((resp)=>{ if(onSuccess) dispatch({type:onSuccess, payload:resp.data.users})})
+        })
+         if(onSuccess) dispatch({type:onSuccess, payload:resp.data.users})
     } catch (error) {
         if(onError) dispatch({type:onError, payload: error.message})
     }

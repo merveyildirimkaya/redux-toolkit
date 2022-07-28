@@ -8,12 +8,14 @@ export const users = createSlice({
         list:[],
     },
     reducers:{
-        usersRequested:(users,action)=>{
+        usersRequested:(users)=>{
             users.loading=true;
+           // console.log(users.loading)
         },
         usersReceived:(users,action)=>{
             users.list=action.payload;
             users.loading=false
+            //console.log(users.loading)
         },
         usersRequestFailed:(users,action)=>{
             users.loading=false
