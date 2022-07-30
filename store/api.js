@@ -2,7 +2,7 @@ import axios from "axios";
 import * as actions from "./apiActions"
 
 const baseURL= "https://dummyjson.com"
-// {dispatch, getState} veya state
+
 const api = ({dispatch}) => next =>async action =>{
     if(action.type!==actions.apiCallBegan.type){
         return next(action)
